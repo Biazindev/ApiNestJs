@@ -7,6 +7,17 @@ async function bootstrap() {
     logger: ['error', 'warn', 'debug', 'log'],
   });
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT ?? 3000);
+
+  app.enableCors({
+    origin: 'https://app-e-paper.vercel.app/documents',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',
+    exposedHeaders: 'Content-Length',
+  });
+  const PORT = 3001;
+  await app.listen(PORT);
+
+  console.log(`NestJS rodando na porta ${PORT}`);
 }
+
 bootstrap();
